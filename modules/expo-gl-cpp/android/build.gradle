@@ -202,7 +202,7 @@ if (new File(rootProject.projectDir.parentFile, 'pubspec.yaml').exists()) {
 dependencies {
     expendency 'expo-core'
 
-    provided 'com.facebook.soloader:soloader:0.5.1'
+    implementation 'com.facebook.soloader:soloader:0.1.0'
 
     // it must be `compile` instead of `implementation` or `api`
     // cause the later dependencies are not accessible by configurations.compile or similar :(
