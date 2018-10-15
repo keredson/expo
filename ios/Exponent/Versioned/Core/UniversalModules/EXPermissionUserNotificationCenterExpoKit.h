@@ -8,6 +8,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EXPermissionUserNotificationCenterExpoKit : NSObject <EXInternalModule, EXUserNotificationsPermissionsCenterInterface>
 
++ (instancetype)sharedInstance;
+
 @end
 
 NS_ASSUME_NONNULL_END

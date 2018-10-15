@@ -210,7 +210,7 @@ const NSUInteger kEXErrorCodeAppForbidden = 424242;
             [weakSelf createNewAppWithUrl:url initialProps:@{ @"notification": bodyWithOrigin }];
           }
         } else {
-          weakSelf.pendingNotificationParams = [[EXSendNotificationParams alloc] initWithExpId:destinationExperienceId
+          weakSelf.pendingNotificationParams = [[EXSendNotificationParams alloc] initWithExperienceId:destinationExperienceId
                                                                            notificationBody:notifBody
                                                                                    isRemote:[NSNumber numberWithBool:isRemote]
                                                                            isFromBackground:[NSNumber numberWithBool:isFromBackground]
@@ -263,13 +263,16 @@ const NSUInteger kEXErrorCodeAppForbidden = 424242;
   if (!notifBody) {
     notifBody = @{};
   }
-  return @{
-    @"origin": (isFromBackground) ? @"selected" : @"received",
-    @"remote": @(isRemote),
-    @"data": notifBody,
-    @"actionId": actionId,
-    @"userText": userText
-  };
+  NSMutableDictionary *res = [@{
+                              @"origin": (isFromBackground) ? @"selected" : @"received",
+                              @"remote": @(isRemote),
+                              @"data": notifBody,
+                              @"actionId": actionId
+                              } mutableCopy];
+  if (userText) {
+    [res addEntriesFromDictionary:@{@"userText": userText}];
+  }
+  return res;
 }
 
 #pragma mark - App State

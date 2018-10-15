@@ -10,22 +10,24 @@
 @property (nonatomic, strong) EXPromiseResolveBlock resolve;
 @property (nonatomic, strong) EXPromiseRejectBlock reject;
 @property (nonatomic, weak) id<EXPermissionRequesterDelegate> delegate;
+@property (nonatomic, weak) EXModuleRegistry * moduleRegistry;
 
 @end
 
 @implementation EXUserNotificationRequester
 
-static EXModuleRegistry * _moduleRegistry = nil;
-
-+ (void)setModuleRegistry:(EXModuleRegistry *) moduleRegistry {
-  _moduleRegistry = moduleRegistry;
+- (instancetype)initWithModuleRegistry: (EXModuleRegistry *) moduleRegistry {
+  if (self = [super init]) {
+    _moduleRegistry = moduleRegistry;
+  }
+  return self;
 }
 
-+ (id<EXUserNotificationsPermissionsCenterInterface>) getCenter {
-  return [_moduleRegistry getModuleImplementingProtocol:@protocol(EXUserNotificationsPermissionsCenterInterface)];
++ (id<EXUserNotificationsPermissionsCenterInterface>) getCenterWithModuleRegistry:(EXModuleRegistry *) moduleRegistry {
+  return [moduleRegistry getModuleImplementingProtocol:@protocol(EXUserNotificationsPermissionsCenterInterface)];
 }
 
-+ (NSDictionary *)permissions
++ (NSDictionary *)permissionsWithModuleRegistry:(EXModuleRegistry *)moduleRegistry
 {
   dispatch_semaphore_t sem = dispatch_semaphore_create(0);
   __block BOOL allowsSound;
@@ -33,7 +35,7 @@ static EXModuleRegistry * _moduleRegistry = nil;
   __block BOOL allowsBadge;
   __block EXPermissionStatus status;
 
-  [[EXUserNotificationRequester getCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
+  [[EXUserNotificationRequester getCenterWithModuleRegistry:moduleRegistry] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
     allowsSound = settings.soundSetting;
     allowsAlert = settings.alertStyle;
     allowsBadge = settings.badgeSetting;
@@ -77,7 +79,7 @@ static EXModuleRegistry * _moduleRegistry = nil;
   __weak EXUserNotificationRequester *weakSelf = self;
 
   UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
-  [[EXUserNotificationRequester getCenter] requestAuthorizationWithOptions:options
+  [[EXUserNotificationRequester getCenterWithModuleRegistry:_moduleRegistry] requestAuthorizationWithOptions:options
                                                            completionHandler:^(BOOL granted, NSError * _Nullable error) {
                                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                                [weakSelf _consumeResolverWithCurrentPermissions];
@@ -88,7 +90,7 @@ static EXModuleRegistry * _moduleRegistry = nil;
 - (void)_consumeResolverWithCurrentPermissions
 {
   if (_resolve) {
-    _resolve([[self class] permissions]);
+    _resolve([[self class] permissionsWithModuleRegistry:_moduleRegistry]);
     _resolve = nil;
     _reject = nil;
   }

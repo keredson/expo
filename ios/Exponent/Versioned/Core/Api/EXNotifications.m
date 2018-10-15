@@ -170,7 +170,7 @@ RCT_EXPORT_METHOD(scheduleLocalNotification:(NSDictionary *)payload
 {
   bool repeats = NO;
   if (options[@"repeats"]) {
-    repeats = ([options[@"repeats"] isEqualToString:@"Yes"])? YES : NO;
+    repeats = (BOOL)options[@"repeats"];
   }
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
   
@@ -201,7 +201,7 @@ RCT_EXPORT_METHOD(scheduleLocalNotificationWithTimeInterval:(NSDictionary *)payl
 {
   bool repeats = NO;
   if (options[@"repeats"]) {
-    repeats = ([options[@"repeats"] isEqualToString:@"Yes"])? YES : NO;
+    repeats = (BOOL)options[@"repeats"];
   }
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
   

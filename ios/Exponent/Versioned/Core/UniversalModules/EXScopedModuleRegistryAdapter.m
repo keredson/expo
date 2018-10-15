@@ -30,7 +30,7 @@
   EXScopedReactNativeAdapter *reactNativeAdapter = [[EXScopedReactNativeAdapter alloc] init];
   [moduleRegistry registerInternalModule:reactNativeAdapter];
 
-  EXPermissionUserNotificationCenterExpoKit *userNotificationCenter = [[EXPermissionUserNotificationCenterExpoKit alloc] init];
+  EXPermissionUserNotificationCenterExpoKit *userNotificationCenter = [EXPermissionUserNotificationCenterExpoKit sharedInstance];
   [moduleRegistry registerInternalModule:userNotificationCenter];
 
   NSArray<id<RCTBridgeModule>> *bridgeModules = [self extraModulesForModuleRegistry:moduleRegistry];

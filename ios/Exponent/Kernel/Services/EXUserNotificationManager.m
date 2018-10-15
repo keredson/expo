@@ -31,7 +31,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
   if (payload) {
     NSDictionary *body = payload[@"body"];
     NSString *experienceId = payload[@"experienceId"];
-    NSString *userText = @"";
+    NSString *userText = nil;
     NSString *actionId = @"DEFAULT_ACTION";
     
     if ([response.actionIdentifier isEqualToString:UNNotificationDismissActionIdentifier]) {
@@ -68,7 +68,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
   if (payload) {
     NSDictionary *body = payload[@"body"];
     NSString *experienceId = payload[@"experienceId"];
-    NSString *userText = @"";
+    NSString *userText = nil;
     
     BOOL isRemote = [notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]];
     if (body && experienceId) {

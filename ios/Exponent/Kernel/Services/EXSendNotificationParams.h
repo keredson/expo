@@ -9,7 +9,7 @@
 @property (strong) NSNumber *isFromBackground;
 @property (strong) NSString *actionId;
 @property (strong) NSString *userText;
-- (instancetype)initWithExpId:(NSString *)expId
+- (instancetype)initWithExperienceId:(NSString *)expId
    notificationBody: (NSDictionary *)body
            isRemote: (NSNumber *) isRemote
    isFromBackground: (NSNumber *)isFromBackground

@@ -102,54 +102,54 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
   dispatch_async(_queue, ^{
 
     [self _canRegisterForRemoteNotificationsWithCompletionHandler:^(BOOL can) {
-        if (!can) {
-          NSError *error = [NSError errorWithDomain:kEXRemoteNotificationErrorDomain
-                                               code:EXRemoteNotificationErrorCodePermissionNotGranted
+      if (!can) {
+        NSError *error = [NSError errorWithDomain:kEXRemoteNotificationErrorDomain
+                                             code:EXRemoteNotificationErrorCodePermissionNotGranted
+                                         userInfo:@{
+                                                    NSLocalizedDescriptionKey: @"This app does not have permission to show notifications",
+                                                    }];
+        handler(nil, error);
+        return;
+      }
+
+      if (self->_currentAPNSToken) {
+        NSString *experienceId = ((EXScopedBridgeModule *)scopedModule).experienceId;
+        [[EXApiV2Client sharedClient] getExpoPushTokenForExperience:experienceId
+                                                        deviceToken:self->_currentAPNSToken
+                                                  completionHandler:handler];
+        return;
+      }
+
+      // When we receive the APNS token, register it with our server and receive an Expo push token
+      [self->_apnsTokenHandlers addObject:^(NSData * _Nullable apnsToken, NSError * _Nullable registrationError) {
+        __strong id strongScopedModule = weakScopedModule;
+        if (!strongScopedModule) {
+          NSError *error = [NSError errorWithDomain:kEXKernelErrorDomain
+                                               code:EXKernelErrorCodeModuleDeallocated
                                            userInfo:@{
-                                                      NSLocalizedDescriptionKey: @"This app does not have permission to show notifications",
+                                                      NSLocalizedDescriptionKey: @"The scoped module that requested an Expo push token was deallocated",
                                                       }];
           handler(nil, error);
           return;
         }
 
-        if (self->_currentAPNSToken) {
+        if (apnsToken) {
           NSString *experienceId = ((EXScopedBridgeModule *)scopedModule).experienceId;
           [[EXApiV2Client sharedClient] getExpoPushTokenForExperience:experienceId
-                                                          deviceToken:self->_currentAPNSToken
+                                                          deviceToken:apnsToken
                                                     completionHandler:handler];
-          return;
+        } else {
+          NSError *error = [NSError errorWithDomain:kEXRemoteNotificationErrorDomain
+                                               code:EXRemoteNotificationErrorCodeAPNSRegistrationFailed
+                                           userInfo:@{
+                                                      NSLocalizedDescriptionKey: @"The device was unable to register for remote notifications with Apple",
+                                                      NSUnderlyingErrorKey: registrationError,
+                                                      }];
+          handler(nil, error);
         }
+      }];
 
-        // When we receive the APNS token, register it with our server and receive an Expo push token
-        [self->_apnsTokenHandlers addObject:^(NSData * _Nullable apnsToken, NSError * _Nullable registrationError) {
-          __strong id strongScopedModule = weakScopedModule;
-          if (!strongScopedModule) {
-            NSError *error = [NSError errorWithDomain:kEXKernelErrorDomain
-                                                 code:EXKernelErrorCodeModuleDeallocated
-                                             userInfo:@{
-                                                        NSLocalizedDescriptionKey: @"The scoped module that requested an Expo push token was deallocated",
-                                                        }];
-            handler(nil, error);
-            return;
-          }
-
-          if (apnsToken) {
-            NSString *experienceId = ((EXScopedBridgeModule *)scopedModule).experienceId;
-            [[EXApiV2Client sharedClient] getExpoPushTokenForExperience:experienceId
-                                                            deviceToken:apnsToken
-                                                      completionHandler:handler];
-          } else {
-            NSError *error = [NSError errorWithDomain:kEXRemoteNotificationErrorDomain
-                                                 code:EXRemoteNotificationErrorCodeAPNSRegistrationFailed
-                                             userInfo:@{
-                                                        NSLocalizedDescriptionKey: @"The device was unable to register for remote notifications with Apple",
-                                                        NSUnderlyingErrorKey: registrationError,
-                                                        }];
-            handler(nil, error);
-          }
-        }];
-
-        [self registerForRemoteNotifications];
+      [self registerForRemoteNotifications];
     }];
   });
 }

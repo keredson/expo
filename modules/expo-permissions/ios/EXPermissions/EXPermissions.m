@@ -62,7 +62,6 @@ EX_EXPORT_MODULE(ExponentPermissions);
 
 - (void)setModuleRegistry:(EXModuleRegistry *)moduleRegistry
 {
-  [EXUserNotificationRequester setModuleRegistry:moduleRegistry];
   _permissionsService = [moduleRegistry getSingletonModuleForName:@"Permissions"];
   _utils = [moduleRegistry getModuleImplementingProtocol:@protocol(EXUtilitiesInterface)];
   _moduleRegistry = moduleRegistry;
@@ -136,7 +135,7 @@ EX_EXPORT_METHOD_AS(askAsync,
     permissionType = [permissionsToBeAsked anyObject];
     [permissionsToBeAsked removeObject:permissionType];
     
-    id<EXPermissionRequester> requester = [[self class] getPermissionRequesterForType:permissionType];
+    id<EXPermissionRequester> requester = [self getPermissionRequesterForType:permissionType];
     
     if (requester == nil) {
       // TODO: other types of permission requesters, e.g. facebook
@@ -260,9 +259,9 @@ EX_EXPORT_METHOD_AS(askAsync,
 - (NSDictionary *)getPermissionsForResource:(NSString *)type
 {
   if ([type isEqualToString:@"notifications"]) {
-    return [EXRemoteNotificationRequester permissions];
+    return [EXRemoteNotificationRequester permissionsWithModuleRegistry:_moduleRegistry];
   } else if ([type isEqualToString:@"userFacingNotifications"]) {
-    return [EXUserNotificationRequester permissions];
+    return [EXUserNotificationRequester permissionsWithModuleRegistry:_moduleRegistry];
   } else if ([type isEqualToString:@"location"]) {
     return [EXLocationRequester permissions];
   } else if ([type isEqualToString:@"camera"]) {
@@ -379,12 +378,12 @@ EX_EXPORT_METHOD_AS(askAsync,
   [self askForScopedPermissions:scopedPermissionsToBeAsked withResolver:scopedPermissionResolver withRejecter:reject];
 }
 
-+ (id<EXPermissionRequester>)getPermissionRequesterForType:(NSString *)type
+- (id<EXPermissionRequester>)getPermissionRequesterForType:(NSString *)type
 {
   if ([type isEqualToString:@"notifications"]) {
-    return [[EXRemoteNotificationRequester alloc] init];
+    return [[EXRemoteNotificationRequester alloc] initWithModuleRegistry:_moduleRegistry];
   } else if ([type isEqualToString:@"userFacingNotifications"]) {
-    return [[EXUserNotificationRequester alloc] init];
+    return [[EXUserNotificationRequester alloc] initWithModuleRegistry:_moduleRegistry];
   } else if ([type isEqualToString:@"location"]) {
     return [[EXLocationRequester alloc] init];
   } else if ([type isEqualToString:@"camera"]) {
