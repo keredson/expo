@@ -21,6 +21,7 @@ NSString * const EXPermissionExpiresNever = @"never";
 @property (nonatomic, weak) id<EXPermissionsServiceInterface> permissionsService;
 @property (nonatomic, weak) id<EXUtilitiesInterface> utils;
 @property (nonatomic, assign) NSString *experienceId;
+@property (nonatomic, weak) EXModuleRegistry * moduleRegistry;
 
 @end
 
@@ -61,8 +62,10 @@ EX_EXPORT_MODULE(ExponentPermissions);
 
 - (void)setModuleRegistry:(EXModuleRegistry *)moduleRegistry
 {
+  [EXUserNotificationRequester setModuleRegistry:moduleRegistry];
   _permissionsService = [moduleRegistry getSingletonModuleForName:@"Permissions"];
   _utils = [moduleRegistry getModuleImplementingProtocol:@protocol(EXUtilitiesInterface)];
+  _moduleRegistry = moduleRegistry;
 }
 
 # pragma mark - Expo exported methods

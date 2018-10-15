@@ -21,3 +21,4 @@
 - (BOOL)savePermission:(NSDictionary *)permission ofType:(NSString *)type forExperience:(NSString *)experienceId;
 
 @end
+

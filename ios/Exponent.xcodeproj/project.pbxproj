@@ -27,6 +27,7 @@
 		2547422E20F4911E009F5FDA /* EXNativeMediaViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2547422D20F4911E009F5FDA /* EXNativeMediaViewManager.m */; };
 		2547423120F4ABFF009F5FDA /* EXAdIconViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2547423020F4ABFF009F5FDA /* EXAdIconViewManager.m */; };
 		255A630A2154FB89009FDFC6 /* EXSendNotificationParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 255A63092154FB88009FDFC6 /* EXSendNotificationParams.m */; };
+		25742BE72174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 25742BE62174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m */; };
 		313D418020C84E9000FC913D /* EXModuleRegistryBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 313D417F20C84E9000FC913D /* EXModuleRegistryBinding.m */; };
 		317168FA213DA0E000766458 /* EXScopedReactNativeAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 317168F9213DA0E000766458 /* EXScopedReactNativeAdapter.m */; };
 		3179683620B5B96A00243B6B /* EXScopedModuleRegistryAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3179683520B5B96A00243B6B /* EXScopedModuleRegistryAdapter.m */; };
@@ -371,6 +372,8 @@
 		2547423020F4ABFF009F5FDA /* EXAdIconViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXAdIconViewManager.m; sourceTree = "<group>"; };
 		255A63082154FB88009FDFC6 /* EXSendNotificationParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXSendNotificationParams.h; sourceTree = "<group>"; };
 		255A63092154FB88009FDFC6 /* EXSendNotificationParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXSendNotificationParams.m; sourceTree = "<group>"; };
+		25742BE52174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXPermissionUserNotificationCenterExpoKit.h; sourceTree = "<group>"; };
+		25742BE62174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXPermissionUserNotificationCenterExpoKit.m; sourceTree = "<group>"; };
 		313D417E20C84E8200FC913D /* EXModuleRegistryBinding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXModuleRegistryBinding.h; sourceTree = "<group>"; };
 		313D417F20C84E9000FC913D /* EXModuleRegistryBinding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXModuleRegistryBinding.m; sourceTree = "<group>"; };
 		317168F9213DA0E000766458 /* EXScopedReactNativeAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXScopedReactNativeAdapter.m; sourceTree = "<group>"; };
@@ -1018,6 +1021,8 @@
 			children = (
 				B5FB73781FF6DADB001C764B /* EXConstantsBinding.h */,
 				B5FB73791FF6DADB001C764B /* EXConstantsBinding.m */,
+				25742BE52174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.h */,
+				25742BE62174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m */,
 				31DBC6AD20B5B4F90049A476 /* EXFileSystemBinding.h */,
 				31DBC6AB20B5B4EC0049A476 /* EXFileSystemBinding.m */,
 				313D417E20C84E8200FC913D /* EXModuleRegistryBinding.h */,
@@ -2695,6 +2700,7 @@
 				BB50E88A20B9C0D3003C752D /* RNGestureHandlerRegistry.m in Sources */,
 				19065BE72006015D007706D6 /* EXFileSystemManager.m in Sources */,
 				07295CD920559E7300ED42D4 /* EXUpdatesManager.m in Sources */,
+				25742BE72174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m in Sources */,
 				BB5BD32A20AEFCB4007E02FC /* REABlockNode.m in Sources */,
 				7846B20820355E9900638E43 /* RNSVGUseManager.m in Sources */,
 				7846B20320355E9900638E43 /* RCTConvert+RNSVG.m in Sources */,
