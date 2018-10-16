@@ -8,4 +8,9 @@ self: super:
     pname = "xcpretty";
     gemdir = ./xcpretty;
   };
+
+  inherit
+    (super.callPackage ./nodepackages { pkgs = self; })
+    expo-cli
+    ;
 }
