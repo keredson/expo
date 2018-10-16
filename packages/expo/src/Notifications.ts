@@ -42,6 +42,41 @@ type Channel = {
   badge?: boolean;
 };
 
+type IntervalTrigger = {
+  timeInterval: number;
+  repeats?: boolean;
+};
+
+type DateMatchingTrigger = {
+  day?: number;
+  month?: number;
+  year?: number;
+  weekday?: number;
+  quarter?: number;
+  leapMonth?: number;
+  nanosecond?: number;
+  era?: number;
+  weekdayOrdinal?: number;
+  weekOfMonth?: number;
+  weekOfYear?: number;
+  hour?: number;
+  second?: number;
+  minute?: number;
+  yearForWeekOfYear?: number;
+  repeats?: boolean;
+};
+
+type ActionType = {
+  actionId: string;
+  buttonTitle: string;
+  isDestructive?: boolean;
+  isAuthenticationRequired?: boolean;
+  textInput?: {
+    submitButtonTitle: string;
+    placeholder: string;
+  };
+};
+
 // Android assigns unique number to each notification natively.
 // Since that's not supported on iOS, we generate an unique string.
 type LocalNotificationId = string | number;
@@ -180,7 +215,7 @@ export default {
   },
 
   // User passes set of actions titles.
-  setCategoryAsync(categoryId, actions): Promise<string> {
+  setCategoryAsync(categoryId: string, actions: Array<ActionType>): Promise<string> {
     let convertedActions = new Array();
     for (let action of actions) {
       let flag = 0;
@@ -297,6 +332,8 @@ export default {
       time?: Date | number;
       repeat?: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year';
       intervalMs?: number;
+      dateMatchingTriggerIOS?: DateMatchingTrigger;
+      intervalTriggerIOS?: IntervalTrigger;
     } = {}
   ): Promise<LocalNotificationId> {
     // set now at the beginning of the method, to prevent potential weird warnings when we validate
@@ -339,22 +376,36 @@ export default {
           'This function is deprecated for ios with repeat option'
         );
         return this.scheduleLocalNotificationWithMatchAsync(
-            notification,
-            {
-              second: timeAsDateObj.getSeconds(),
-              minute: timeAsDateObj.getMinutes(),
-              hour: timeAsDateObj.getHours(),
-              day: timeAsDateObj.getUTCDate(),
-              month: timeAsDateObj.getUTCMonth() + 1,
-              year: timeAsDateObj.getFullYear(),
-            }
-          );
+          notification,
+          {
+            second: timeAsDateObj.getSeconds(),
+            minute: timeAsDateObj.getMinutes(),
+            hour: timeAsDateObj.getHours(),
+            day: timeAsDateObj.getUTCDate(),
+            month: timeAsDateObj.getUTCMonth() + 1,
+            year: timeAsDateObj.getFullYear(),
+          }
+        );
       }
 
       options = {
         ...options,
         time: timeAsDateObj,
       };
+    }
+
+    if (options.intervalTriggerIOS != null && Platform.OS == "ios") {
+      return this.scheduleLocalNotificationWithTimeIntervalAsync(
+        notification,
+        options.intervalTriggerIOS
+      );
+    }
+
+    if (options.dateMatchingTriggerIOS != null && Platform.OS == "ios") {
+      return this.scheduleLocalNotificationWithMatchAsync(
+        notification,
+        options.dateMatchingTriggerIOS
+      );
     }
 
     if (options.intervalMs != null && options.repeat != null) {
