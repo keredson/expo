@@ -1,4 +1,4 @@
-//  Copyright © 2018 650 Industries. All rights reserved.
+//  Copyright © 2018-present 650 Industries. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
@@ -10,9 +10,9 @@
 @property (strong) NSString *actionId;
 @property (strong) NSString *userText;
 - (instancetype)initWithExperienceId:(NSString *)experienceId
-   notificationBody: (NSDictionary *)body
-           isRemote: (NSNumber *)isRemote
-   isFromBackground: (NSNumber *)isFromBackground
-           actionId: (NSString *)actionId
-           userText: (NSString *)userText;
+                    notificationBody:(NSDictionary *)body
+                            isRemote:(NSNumber *)isRemote
+                    isFromBackground:(NSNumber *)isFromBackground
+                            actionId:(NSString *)actionId
+                            userText:(NSString *)userText;
 @end

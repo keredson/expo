@@ -1,11 +1,4 @@
-//
-//  EXCategoryAction.m
-//  Exponent
-//
-//  Created by smszymon on 16.10.2018.
-//  Copyright © 2018 650 Industries. All rights reserved.
-//
-
+// Copyright 2018-present 650 Industries. All rights reserved.
 #import "EXCategoryAction.h"
 
 @implementation EXCategoryAction

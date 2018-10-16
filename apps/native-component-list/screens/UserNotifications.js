@@ -63,7 +63,7 @@ export default class UserNotificationsScreen extends React.Component {
   };
 
   _schedule = () => {
-    Notifications.scheduleLocalNotificationWithMatchAsync(
+    Notifications.scheduleLocalNotificationWithMatchIOSAsync(
       {
         title: 'notification',
         body: 'notification-body',
@@ -78,7 +78,7 @@ export default class UserNotificationsScreen extends React.Component {
   };
 
   _waitTenSec = async () => {
-    this.notificationId = await Notifications.scheduleLocalNotificationWithTimeIntervalAsync(
+    this.notificationId = await Notifications.scheduleLocalNotificationWithTimeIntervalIOSAsync(
       {
         title: 'notification',
         body: 'notification-body',

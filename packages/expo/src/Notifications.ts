@@ -82,9 +82,9 @@ type ActionType = {
 type LocalNotificationId = string | number;
 
 const FlagsEnum = Object.freeze({
-  "None":0,
-  "AuthenticationRequired":1,
-  "Destructive":2,
+  None: ExponentNotifications.None,
+  AuthenticationRequired: ExponentNotifications.AuthenticationRequired,
+  Destructive: ExponentNotifications.Destructive,
 });
 
 let _emitter;
@@ -215,7 +215,7 @@ export default {
   },
 
   // User passes set of actions titles.
-  putCategoryAsync(categoryId: string, actions: Array<ActionType>): Promise<string> {
+  putCategoryAsync(categoryId: string, actions: Array<ActionType>): Promise<void> {
     let convertedActions = new Array();
     for (let action of actions) {
       let flag = 0;
@@ -238,7 +238,7 @@ export default {
 
       convertedActions.push(convertedAction);
     }
-    return ExponentNotifications.addCategory(categoryId, convertedActions);
+    return ExponentNotifications.putCategory(categoryId, convertedActions);
   },
 
   /* Re-export */
@@ -312,16 +312,16 @@ export default {
     }
   },
 
-  async scheduleLocalNotificationWithMatchAsync(notification, options) {
+  async scheduleLocalNotificationWithMatchIOSAsync(notification: LocalNotification, options: DateMatchingTrigger) {
     if (Platform.OS === 'android') {
-       return new Promise((resolve,reject) => reject("This function currently works only on ios"));
+       throw new Error("This function is supported only on iOS.");
     }
     return ExponentNotifications.scheduleLocalNotification(notification, options);
   },
 
-  async scheduleLocalNotificationWithTimeIntervalAsync(notification, options) {
+  async scheduleLocalNotificationWithTimeIntervalIOSAsync(notification: LocalNotification, options: IntervalTrigger) {
     if (Platform.OS === 'android') {
-       return new Promise((resolve,reject) => reject("This function currently works only on ios"));
+       throw new Error("This function is supported only on iOS.");
     }
     return ExponentNotifications.scheduleLocalNotificationWithTimeInterval(notification, options);
   },
@@ -375,7 +375,7 @@ export default {
           options.repeat == undefined,
           'This function is deprecated for ios with repeat option'
         );
-        return this.scheduleLocalNotificationWithMatchAsync(
+        return this.scheduleLocalNotificationWithMatchIOSAsync(
           notification,
           {
             second: timeAsDateObj.getSeconds(),
@@ -395,14 +395,14 @@ export default {
     }
 
     if (options.intervalTriggerIOS != null && Platform.OS == "ios") {
-      return this.scheduleLocalNotificationWithTimeIntervalAsync(
+      return this.scheduleLocalNotificationWithTimeIntervalIOSAsync(
         notification,
         options.intervalTriggerIOS
       );
     }
 
     if (options.dateMatchingTriggerIOS != null && Platform.OS == "ios") {
-      return this.scheduleLocalNotificationWithMatchAsync(
+      return this.scheduleLocalNotificationWithMatchIOSAsync(
         notification,
         options.dateMatchingTriggerIOS
       );

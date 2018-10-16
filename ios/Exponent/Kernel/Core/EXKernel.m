@@ -184,8 +184,8 @@ const NSUInteger kEXErrorCodeAppForbidden = 424242;
       toExperienceWithId:(NSString *)destinationExperienceId
           fromBackground:(BOOL)isFromBackground
                 isRemote:(BOOL)isRemote
-                actionId: (NSString *)actionId
-                userText: (NSString *)userText
+                actionId:(NSString *)actionId
+                userText:(NSString *)userText
 {
   EXKernelAppRecord *destinationApp = [_appRegistry newestRecordWithExperienceId:destinationExperienceId];
   NSDictionary *bodyWithOrigin = [self _notificationPropsWithBody:notifBody

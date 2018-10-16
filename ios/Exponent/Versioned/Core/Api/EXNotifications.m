@@ -4,6 +4,7 @@
 #import "EXModuleRegistryBinding.h"
 #import "EXUnversioned.h"
 #import "EXUtil.h"
+#import "EXCategoryAction.h"
 #import "EXEnvironment.h"
 
 #import <React/RCTUtils.h>
@@ -11,7 +12,6 @@
 
 #import <EXConstantsInterface/EXConstantsInterface.h>
 #import <UserNotifications/UserNotifications.h>
-#import "EXCategoryAction.h"
 
 @implementation RCTConvert (NSCalendarUnit)
 
@@ -112,7 +112,7 @@ RCT_EXPORT_METHOD(presentLocalNotification:(NSDictionary *)payload
 
 }
 
-RCT_EXPORT_METHOD(addCategory: (NSString *)categoryId
+RCT_EXPORT_METHOD(putCategory: (NSString *)categoryId
                   actions: (NSArray *)actions
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(__unused RCTPromiseRejectBlock)reject)
@@ -142,7 +142,7 @@ RCT_EXPORT_METHOD(addCategory: (NSString *)categoryId
   
   [[EXUserNotificationCenter sharedInstance] getNotificationCategoriesWithCompletionHandler:^(NSSet * categories) {
     NSMutableSet * newCategories = [categories mutableCopy];
-    for( UNNotificationCategory * category in newCategories) {
+    for(UNNotificationCategory *category in newCategories) {
       if ([category.identifier isEqualToString:categoryId]) {
         [newCategories removeObject:category];
         break;
@@ -161,7 +161,7 @@ RCT_EXPORT_METHOD(scheduleLocalNotification:(NSDictionary *)payload
 {
   bool repeats = NO;
   if (options[@"repeats"]) {
-    repeats = (BOOL)options[@"repeats"];
+    repeats = [options[@"repeats"] boolValue];
   }
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
   
@@ -196,7 +196,7 @@ RCT_EXPORT_METHOD(scheduleLocalNotificationWithTimeInterval:(NSDictionary *)payl
 {
   bool repeats = NO;
   if (options[@"repeats"]) {
-    repeats = (BOOL)options[@"repeats"];
+    repeats = [options[@"repeats"] boolValue];
   }
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
   
@@ -304,11 +304,20 @@ RCT_EXPORT_METHOD(setBadgeNumberAsync:(nonnull NSNumber *)number
   return content;
 }
 
--(NSString *) getScopedIdIfDetached:(NSString *) identifier {
+- (NSString *)getScopedIdIfDetached:(NSString *)identifier {
   if ([EXEnvironment sharedEnvironment].isDetached) {
     return identifier;
   }
   return [NSString stringWithFormat:@"%@%@%@", self.experienceId, @":", identifier];
+}
+
+- (NSDictionary *)constantsToExport
+{
+  return @{
+           @"None": @(UNNotificationActionOptionNone),
+           @"AuthenticationRequired": @(UNNotificationActionOptionAuthenticationRequired),
+           @"Destructive": @(UNNotificationActionOptionDestructive),
+  };
 }
 
 @end
