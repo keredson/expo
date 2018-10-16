@@ -98,8 +98,9 @@ RCT_EXPORT_METHOD(presentLocalNotification:(NSDictionary *)payload
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
 
   [EXUtil performSynchronouslyOnMainThread:^{
-    UNNotificationRequest* request = [UNNotificationRequest
-                                      requestWithIdentifier:content.userInfo[@"id"] content:content trigger:nil];
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:content.userInfo[@"id"]
+                                                                          content:content
+                                                                          trigger:nil];
     [[EXUserNotificationCenter sharedInstance] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
       if (error != nil) {
         reject(@"E_NOTIF", [NSString stringWithFormat:@"Could not add a notification request: %@", error.localizedDescription], error);
@@ -165,15 +166,19 @@ RCT_EXPORT_METHOD(scheduleLocalNotification:(NSDictionary *)payload
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
   
   NSDateComponents * date = [[NSDateComponents alloc] init];
-  NSArray * units = @[@"day", @"month", @"year", @"weekday", @"quarter", @"leapMonth", @"nanosecond", @"era", @"weekdayOrdinal", @"weekOfMonth", @"weekOfYear", @"hour", @"second", @"minute", @"yearForWeekOfYear"];
+  NSArray * units = @[@"day", @"month", @"year", @"weekday", @"quarter", @"leapMonth",
+                      @"nanosecond", @"era", @"weekdayOrdinal", @"weekOfMonth", @"weekOfYear",
+                      @"hour", @"second", @"minute", @"yearForWeekOfYear"];
   for( NSString * unit in units) {
     if (options[unit]) {
       [date setValue:(NSNumber *)options[unit] forKey:unit];
     }
   }
+
   UNCalendarNotificationTrigger* trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:date repeats:repeats];
-  UNNotificationRequest* request = [UNNotificationRequest
-                                    requestWithIdentifier:content.userInfo[@"id"] content:content trigger:trigger];
+  UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:content.userInfo[@"id"]
+                                                                        content:content
+                                                                        trigger:trigger];
   [[EXUserNotificationCenter sharedInstance] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
       NSLog(@"%@", error.localizedDescription);
@@ -196,7 +201,7 @@ RCT_EXPORT_METHOD(scheduleLocalNotificationWithTimeInterval:(NSDictionary *)payl
   UNMutableNotificationContent* content = [self _localNotificationFromPayload:payload];
   
   [EXUtil performSynchronouslyOnMainThread:^{
-    int timeInterval = [((NSNumber *)options[@"time-interval"]) intValue];
+    int timeInterval = [((NSNumber *)options[@"timeInterval"]) intValue];
     UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:timeInterval
                                                                                                     repeats:repeats];
     UNNotificationRequest* request = [UNNotificationRequest

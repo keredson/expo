@@ -1,6 +1,7 @@
 // Copyright 2018-present 650 Industries. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import <UserNotifications/UserNotifications.h>
 
 @protocol EXPermissionsInterface
 
@@ -19,6 +20,13 @@
 
 - (BOOL)hasGrantedPermission:(NSString *)permission forExperience:(NSString *)experienceId;
 - (BOOL)savePermission:(NSDictionary *)permission ofType:(NSString *)type forExperience:(NSString *)experienceId;
+
+@end
+
+@protocol EXUserNotificationsPermissionsCenterInterface <NSObject>
+
+- (void)getNotificationSettingsWithCompletionHandler:(void(^)(UNNotificationSettings *settings))completionHandler;
+- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;
 
 @end
 

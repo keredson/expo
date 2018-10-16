@@ -85,7 +85,7 @@ export default class UserNotificationsScreen extends React.Component {
         data: { scheduledAt: new Date().getTime() },
       },
       {
-        'time-interval': 10,
+        timeInterval: 10,
       }
     );
   };

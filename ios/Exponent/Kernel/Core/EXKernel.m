@@ -159,7 +159,6 @@ const NSUInteger kEXErrorCodeAppForbidden = 424242;
 - (id)nativeModuleForAppManager:(EXReactAppManager *)appManager named:(NSString *)moduleName
 {
   id destinationBridge = appManager.reactBridge;
-  
   if ([destinationBridge respondsToSelector:@selector(batchedBridge)]) {
     id batchedBridge = [destinationBridge batchedBridge];
     id moduleData = [batchedBridge moduleDataForName:moduleName];
@@ -212,8 +211,8 @@ const NSUInteger kEXErrorCodeAppForbidden = 424242;
         } else {
           weakSelf.pendingNotificationParams = [[EXSendNotificationParams alloc] initWithExperienceId:destinationExperienceId
                                                                            notificationBody:notifBody
-                                                                                   isRemote:[NSNumber numberWithBool:isRemote]
-                                                                           isFromBackground:[NSNumber numberWithBool:isFromBackground]
+                                                                                   isRemote:@(isRemote)
+                                                                           isFromBackground:@(isFromBackground)
                                                                                    actionId:actionId
                                                                                    userText:userText];
         }

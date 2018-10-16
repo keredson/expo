@@ -29,39 +29,56 @@ static dispatch_queue_t queue;
   return theCenter;
 }
 
-- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:options completionHandler:
-    completionHandler];
+- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options
+                      completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler {
+  dispatch_async(queue,^(void){
+      [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:options
+                                                                          completionHandler:completionHandler];
   });
 }
 
 - (void)setNotificationCategories:(NSSet<UNNotificationCategory *> *)categories __TVOS_PROHIBITED {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] setNotificationCategories:categories]; });
+  dispatch_async(queue,^(void){
+    [[UNUserNotificationCenter currentNotificationCenter] setNotificationCategories:categories];
+  });
 }
 
 - (void)getNotificationCategoriesWithCompletionHandler:(void(^)(NSSet<UNNotificationCategory *> *categories))completionHandler
   __TVOS_PROHIBITED {
-    dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] getNotificationCategoriesWithCompletionHandler:completionHandler]; });
+    dispatch_async(queue, ^(void){
+      [[UNUserNotificationCenter currentNotificationCenter] getNotificationCategoriesWithCompletionHandler:completionHandler];
+    });
 }
 
 - (void)getNotificationSettingsWithCompletionHandler:(void(^)(UNNotificationSettings *settings))completionHandler {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:completionHandler]; });
+  dispatch_async(queue, ^(void){
+    [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:completionHandler];
+  });
 }
 
-- (void)addNotificationRequest:(UNNotificationRequest *)request withCompletionHandler:(nullable void(^)(NSError *__nullable error))completionHandler {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:completionHandler]; });
+- (void)addNotificationRequest:(UNNotificationRequest *)request
+         withCompletionHandler:(nullable void(^)(NSError *__nullable error))completionHandler {
+  dispatch_async(queue, ^(void){
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:completionHandler];
+  });
 }
 
 - (void)getPendingNotificationRequestsWithCompletionHandler:(void(^)(NSArray<UNNotificationRequest *> *requests))completionHandler {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] getPendingNotificationRequestsWithCompletionHandler:completionHandler]; });
+  dispatch_async(queue, ^(void){
+    [[UNUserNotificationCenter currentNotificationCenter] getPendingNotificationRequestsWithCompletionHandler:completionHandler];
+  });
 }
 
 - (void)removePendingNotificationRequestsWithIdentifiers:(NSArray<NSString *> *)identifiers {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:identifiers]; });
+  dispatch_async(queue, ^(void){
+    [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:identifiers];
+  });
 }
 
 - (void)removeAllPendingNotificationRequests {
-  dispatch_async(queue, ^(void){ [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests]; });
+  dispatch_async(queue, ^(void){
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests];
+  });
 }
 
 @end
