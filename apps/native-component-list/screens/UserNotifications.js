@@ -36,7 +36,7 @@ export default class UserNotificationsScreen extends React.Component {
       },
     };
 
-    await Notifications.setCategoryAsync('super-category', [action, textAction]);
+    await Notifications.putCategoryAsync('super-category', [action, textAction]);
 
     this._notificationListener = Notifications.addListener(e => {
       this.setState({ gotNotification: true, receivedEvent: JSON.stringify(e) });

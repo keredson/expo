@@ -215,7 +215,7 @@ export default {
   },
 
   // User passes set of actions titles.
-  setCategoryAsync(categoryId: string, actions: Array<ActionType>): Promise<string> {
+  putCategoryAsync(categoryId: string, actions: Array<ActionType>): Promise<string> {
     let convertedActions = new Array();
     for (let action of actions) {
       let flag = 0;
