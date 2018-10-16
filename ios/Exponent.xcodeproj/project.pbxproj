@@ -28,6 +28,7 @@
 		2547423120F4ABFF009F5FDA /* EXAdIconViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2547423020F4ABFF009F5FDA /* EXAdIconViewManager.m */; };
 		255A630A2154FB89009FDFC6 /* EXSendNotificationParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 255A63092154FB88009FDFC6 /* EXSendNotificationParams.m */; };
 		25742BE72174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 25742BE62174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m */; };
+		25742BEA2175F3B0003E7453 /* EXCategoryAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 25742BE92175F3B0003E7453 /* EXCategoryAction.m */; };
 		313D418020C84E9000FC913D /* EXModuleRegistryBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 313D417F20C84E9000FC913D /* EXModuleRegistryBinding.m */; };
 		317168FA213DA0E000766458 /* EXScopedReactNativeAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 317168F9213DA0E000766458 /* EXScopedReactNativeAdapter.m */; };
 		3179683620B5B96A00243B6B /* EXScopedModuleRegistryAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3179683520B5B96A00243B6B /* EXScopedModuleRegistryAdapter.m */; };
@@ -374,6 +375,8 @@
 		255A63092154FB88009FDFC6 /* EXSendNotificationParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXSendNotificationParams.m; sourceTree = "<group>"; };
 		25742BE52174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXPermissionUserNotificationCenterExpoKit.h; sourceTree = "<group>"; };
 		25742BE62174B8BE003E7453 /* EXPermissionUserNotificationCenterExpoKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXPermissionUserNotificationCenterExpoKit.m; sourceTree = "<group>"; };
+		25742BE82175F3B0003E7453 /* EXCategoryAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXCategoryAction.h; sourceTree = "<group>"; };
+		25742BE92175F3B0003E7453 /* EXCategoryAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXCategoryAction.m; sourceTree = "<group>"; };
 		313D417E20C84E8200FC913D /* EXModuleRegistryBinding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXModuleRegistryBinding.h; sourceTree = "<group>"; };
 		313D417F20C84E9000FC913D /* EXModuleRegistryBinding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXModuleRegistryBinding.m; sourceTree = "<group>"; };
 		317168F9213DA0E000766458 /* EXScopedReactNativeAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXScopedReactNativeAdapter.m; sourceTree = "<group>"; };
@@ -1683,6 +1686,8 @@
 				3CEBDC401FFBC73D0025EF24 /* EXMailComposer.m */,
 				B5FB73941FF6DADB001C764B /* EXNotifications.h */,
 				B5FB73951FF6DADB001C764B /* EXNotifications.m */,
+				25742BE82175F3B0003E7453 /* EXCategoryAction.h */,
+				25742BE92175F3B0003E7453 /* EXCategoryAction.m */,
 				B5FB73961FF6DADB001C764B /* EXScreenOrientation.h */,
 				B5FB73971FF6DADB001C764B /* EXScreenOrientation.m */,
 				B5FB73981FF6DADB001C764B /* EXSecureStore.h */,
@@ -2458,6 +2463,7 @@
 				7846B21F20355E9900638E43 /* RNSVGSolidColorBrush.m in Sources */,
 				7834361D205B8C5F00DD28C3 /* AIRMapManager.m in Sources */,
 				07E26F311FFFFB55004667A1 /* EXCalendar.m in Sources */,
+				25742BEA2175F3B0003E7453 /* EXCategoryAction.m in Sources */,
 				7846B21B20355E9900638E43 /* RNSVGPattern.m in Sources */,
 				7846B21220355E9900638E43 /* RNSVGTextManager.m in Sources */,
 				BBD03196200011C9009F0434 /* RNAWSCognito.m in Sources */,

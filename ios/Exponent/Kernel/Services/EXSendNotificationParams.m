@@ -17,9 +17,8 @@
     _body = body;
     _actionId = actionId;
     _userText = userText;
-    return self;
   }
-  return nil;
+  return self;
 }
 
 @end

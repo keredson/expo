@@ -11,6 +11,7 @@
 
 #import <EXConstantsInterface/EXConstantsInterface.h>
 #import <UserNotifications/UserNotifications.h>
+#import "EXCategoryAction.h"
 
 @implementation RCTConvert (NSCalendarUnit)
 
@@ -124,9 +125,6 @@ RCT_EXPORT_METHOD(addCategory: (NSString *)categoryId
   NSMutableArray<UNNotificationAction *> * actionsArray = [[NSMutableArray alloc] init];
   
   for(NSArray *action in actions) {
-    int optionsInt = [(NSNumber *)action[2] intValue];
-    UNNotificationActionOptions options = UNNotificationActionOptionForeground + optionsInt;
-
     /*
      action[0] actionId
      action[1] buttonTitle
@@ -135,16 +133,8 @@ RCT_EXPORT_METHOD(addCategory: (NSString *)categoryId
      action[4] default text in textInput
      */
 
-    if (([action count] == 5)) {
-      UNTextInputNotificationAction * newAction = [UNTextInputNotificationAction actionWithIdentifier:action[0]
-                                                                                                title:action[1]
-                                                                                              options:options
-                                                                                 textInputButtonTitle:action[3] textInputPlaceholder:action[4]];
-      [actionsArray addObject:newAction];
-    } else {
-      UNNotificationAction * newAction = [UNNotificationAction actionWithIdentifier:action[0] title:action[1] options:options];
-      [actionsArray addObject:newAction];
-    }
+    EXCategoryAction * categoryAction = [EXCategoryAction parseFromArray:action];
+    [actionsArray addObject:[categoryAction getUNNotificationAction]];
   }
   
   UNNotificationCategory * newCategory = [UNNotificationCategory categoryWithIdentifier:categoryId actions:actionsArray intentIdentifiers:@[] options:UNNotificationCategoryOptionNone];
