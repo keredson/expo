@@ -11,5 +11,6 @@ in
 { ... } @ args:
 
   import nixpkgs (args // {
-    config = { };
+    overlays = [ (import ./nix/all-packages.nix) ];
+    config = {  };
   })
